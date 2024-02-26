@@ -1,0 +1,66 @@
+.margin30 {
+    margin-top: 30px;
+}
+
+#newpost_index {
+    margin-top: 30px;
+    margin-bottom: 30;
+}
+
+#index_textarea{
+    margin: 20px;
+}
+
+#button_submit_index {
+    margin-bottom: 20px;
+}
+
+.listing_posts{
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.listing_posts p, img {
+    line-height: 40%;
+}
+
+.listing_posts_datetime {
+    color: gray;
+}
+
+.heart_likes {
+    align-items:center;
+}
+.heart_likes p {
+    margin: 0;
+}
+.image_like_heart {
+    height: 15px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+#Signin_index_info_post {
+    margin: 30px;
+    text-align: center;
+}
+#username_profile_page {
+    text-align: center;
+    margin: 20px;
+}
+#labelfolow_profile_page {
+    margin: 40px;
+}
+.changing_page{
+    margin-top: 20px;
+}
+
+#edit_post_h3 {
+    margin-top: 30px;
+    margin-bottom: 30;
+}
+#button_submit_edit_page {
+    margin-bottom: 20px;
+}
+#user_page_edit_button {
+    align-self: flex-start;
+}

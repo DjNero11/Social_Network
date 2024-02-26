@@ -1,0 +1,68 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <div>
+        <h1 id="username_profile_page">{{username}}</h1>
+        <div class="d-flex justify-content-around" id="labelfolow_profile_page">
+            <form action="{% url 'user_profile' user_id=profile_id%}" method="post">
+                {% csrf_token %}
+                {% if folow_info == "Unfollow"%}
+                    <input type="hidden" value="Unfollow" name="follow_button_profile">
+                    <input type="hidden" value="{{profile_id}}" name="follow_button_profile_id">
+                    <button type="submit" class="btn btn-primary">{{folow_info}}</button>
+                {%elif folow_info == "Follow" %}
+                    <input type="hidden" value="Follow" name="follow_button_profile">
+                    <input type="hidden" value="{{profile_id}}" name="follow_button_profile_id">
+                    <button type="submit" class="btn btn-primary">{{folow_info}}</button>
+                {% endif %}
+            </form>
+            <h4>Followers: {{n_followers}}</h4>
+            <h4>Follows:{{n_follows}}</h4>
+        </div>
+    </div>
+
+    {% for p in page_obj %}
+    <div class=" container border listing_posts listing_posts_js listing_posts_{{p.id}}" >
+        <h6>{{username}}</h6>
+        <br>
+        <p class="listing_posts_text_{{p.id}}" >{{p.text}}</p>
+        <p class="listing_posts_datetime">{{p.date_time}}</p>
+        <div class="d-flex justify-content-start heart_likes" >
+            <input type="image" src="https://cdn.pixabay.com/photo/2016/08/29/13/55/heart-1628313_1280.png" alt="Heart" class="image_like_heart" value="{{p.id}}" data-path="{% url 'likes_change_API_views' %}">
+            <p class="likes_count_{{p.id}}">{{p.likes.all.count}}</p>
+        </div>
+        {% if user.id == p.user_id %}
+            <button type="button" class="btn btn-link post_edit_button" value="{{p.id}}">Edit post</button>
+        {% endif %}
+    </div>
+
+    <div class=" container border listing_posts listing_posts_edit_js listing_posts_edit_{{p.id}}">
+        <h6>{{username}}</h6>
+        <p class="listing_posts_datetime">Created: {{p.date_time}}</p>
+        <br>
+        <textarea class="form-control container edit_post_textarea_{{p.id}}" rows="3" name="newpost_text" >{{p.text}}</textarea>
+        {% if user.id == p.user_id %}
+            <button type="button" class="btn btn-link post_edit_save_button" value="{{p.id}}" data-path="{% url 'edit_post' post_id=p.id %}">Save</button>
+        {% endif %}
+    </div>
+        
+    <div class="alert alert-info container listing_posts_edit_Message_All listing_posts_edit_Message{{p.id}}" role="alert"></div>
+    
+    {% endfor %}
+
+    <div class="changing_page" >
+        <nav aria-label="Page navigation example">
+            <ul class="pagination container">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    
+{% endblock %}

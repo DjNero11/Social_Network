@@ -1,0 +1,33 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    {% for p in page_obj %}
+        <div class=" container border listing_posts">
+            <a href="{% url 'user_profile' user_id=p.user.id %}"><h6>{{p.user}}</h6></a>
+            <br>
+            <p>{{p.text}}</p>
+            <p class="listing_posts_datetime">{{p.date_time}}</p>
+            <div class="d-flex justify-content-start heart_likes">
+                <input type="image" src="https://cdn.pixabay.com/photo/2016/08/29/13/55/heart-1628313_1280.png" alt="Heart" class="image_like_heart" value="{{p.id}}" data-path="{% url 'likes_change_API_views' %}">
+                <p class="likes_count_{{p.id}}">{{p.likes.all.count}}</p>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <div class="changing_page" >
+        <nav aria-label="Page navigation example">
+            <ul class="pagination container">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+
+{% endblock %}
